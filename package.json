@@ -1,0 +1,28 @@
+{
+  "name": "gratus-api",
+  "version": "0.0.1",
+  "description": "An experiment in social gratitude.",
+  "author": "Chad Joseph Brown",
+  "private": false,
+  "main": "server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chadjoseph/gratus-api.git"
+  },
+  "dependencies": {
+    "bcryptjs": "~0.7.12",
+    "co-body": "~0.0.1",
+    "koa": "~0.5.5",
+    "koa-cors": "~0.0.8",
+    "koa-jwt": "~0.0.3",
+    "koa-route": "~1.1.1",
+    "nano": "~5.8.0",
+    "sugar": "~1.4.1"
+  },
+  "engines": {
+    "node": "~0.11.12"
+  },
+  "scripts": {
+    "start": "node --harmony server/serve"
+  }
+}

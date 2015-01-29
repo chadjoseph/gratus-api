@@ -1,0 +1,17 @@
+{
+  "_id": "_design/personas",
+  "_rev": "38-d926f839b8cc6d68e00ddb50d61c441f",
+  "views": {
+    "by-persona": {
+      "map": "function(doc) { if (doc.name) { emit([doc._id, '0'], null); } else if (doc.expressio) { emit([doc.persona, doc.date], null); } }"
+    },
+    "by-email": {
+      "map": "function(doc) { if (doc.email) { emit(doc.email, 1); } }",
+      "reduce": "_count"
+    }
+  },
+  "lists": {
+    "show": "function(head, req) { var row, doc, persona, expressiones = []; while(row = getRow()) { doc = row.doc; if (doc.name) { persona = { email: doc.email, name: doc.name, persona: doc._id }; } else if (doc.expressio) { expressiones.push({ id: doc._id, name: persona.name, persona: persona.persona, expressio: doc.expressio, date: doc.date }); } } send(JSON.stringify({ expressiones: expressiones, persona: persona })); }"
+  }
+}
+

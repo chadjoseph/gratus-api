@@ -1,0 +1,20 @@
+{
+  "_id": "_design/expressiones",
+  "_rev": "174-6bddde1b2730a54192cefc7a746cb7f7",
+  "views": {
+    "all": {
+      "map": "function(doc) { if (doc.expressio) { emit([doc.date, doc.persona], { _id: doc.persona, id: doc._id, date: doc.date, expressio: doc.expressio }); } }"
+    },
+    "by-id": {
+      "map": "function(doc) { if (doc.expressio) { emit(doc._id, { _id: doc.persona, id: doc._id, date: doc.date, expressio: doc.expressio }); } }"
+    },
+    "by-slash": {
+      "map": "function(doc) { if (doc.expressio) { var slashes = doc.expressio.match(/\\/\\w+/g); for (var i in slashes) { emit([slashes[i].slice(1).toLowerCase(), doc.date], { _id: doc.persona, id: doc._id, date: doc.date, expressio: doc.expressio }); } } }"
+    }
+  },
+  "lists": {
+    "index": "function(head, req) { var row, persona, expressio, expressiones = []; while(row = getRow()) { expressio = row.value, persona = row.doc; expressiones.push({ email: persona.email, name: persona.name, persona: persona._id, id: expressio.id, expressio: expressio.expressio, date: expressio.date }); } send(JSON.stringify({ expressiones: expressiones })); }",
+    "show": "function(head, req) { var row = getRow(), persona = row.doc, expressio = row.value; send(JSON.stringify({ expressiones: [{ email: persona.email, name: persona.name, persona: persona._id, id: expressio.id, expressio: expressio.expressio, date: expressio.date }] })); }"
+  }
+}
+
